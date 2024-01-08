@@ -5,31 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+        }
+
         #map {
-            height: 400px;
+            height: 100vh;
             width: 100%;
+        }
+
+        #legendButton {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 1000;
+            background-color: #fff;
+            padding: 5px 10px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+
+        #legend {
+            position: absolute;
+            top: 30px;
+            left: 10px;
+            z-index: 1000;
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ccc;
+            display: none;
         }
     </style>
     <title>Web Map Application</title>
 </head>
 <body>
     <div id="map"></div>
+    <div id="legendButton" onclick="toggleLegend()">Legend</div>
+    <div id="legend">
+        <!-- Add legend content here -->
+        Legend content goes here.
+    </div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        // Initialize the map
         var map = L.map('map').setView([51.505, -0.09], 13);
 
-        // Add a tile layer to the map (you can choose a different provider)
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Add a marker to the map
-        var marker = L.marker([51.505, -0.09]).addTo(map);
+        L.control.scale().addTo(map);
 
-        // Add a popup to the marker
+        var marker = L.marker([51.505, -0.09]).addTo(map);
         marker.bindPopup("<b>Hello World!</b><br>This is a sample popup.").openPopup();
+
+        function toggleLegend() {
+            var legend = document.getElementById('legend');
+            legend.style.display = legend.style.display === 'none' ? 'block' : 'none';
+        }
     </script>
 </body>
 </html>
